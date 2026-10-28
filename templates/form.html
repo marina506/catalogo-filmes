@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+    {% if filme %}Editar filme{% else %}Cadastrar filme{% endif %}
+{% endblock %}
+
+{% block conteudo %}
+
+<style>
+    .formulario {
+        max-width: 600px;
+        margin: auto;
+        padding: 30px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 3px 10px #00000010;
+    }
+
+    .campo {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccd5e0;
+        border-radius: 6px;
+        font-size: 16px;
+    }
+
+    input:focus, select:focus {
+        outline: 2px solid #087f8c;
+        border-color: transparent;
+    }
+
+    .botoes {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 25px;
+    }
+
+    .cancelar {
+        background-color: #65758b;
+    }
+</style>
+
+<div class="formulario">
+    <h2>
+        {% if filme %}
+            Editar filme ✏️
+        {% else %}
+            Cadastrar filme 🎬
+        {% endif %}
+    </h2>
+
+    <p>Preencha as informações abaixo.</p>
+
+    <form method="POST">
+        <div class="campo">
+            <label for="titulo">Título do filme</label>
+            <input
+                type="text"
+                id="titulo"
+                name="titulo"
+                value="{{ filme['titulo'] if filme else '' }}"
+                maxlength="150"
+                required
+            >
+        </div>
+
+        <div class="campo">
+            <label for="genero">Gênero</label>
+            <input
+                type="text"
+                id="genero"
+                name="genero"
+                value="{{ filme['genero'] if filme else '' }}"
+                maxlength="80"
+                required
+            >
+        </div>
+
+        <div class="campo">
+            <label for="ano">Ano de lançamento</label>
+            <input
+                type="number"
+                id="ano"
+                name="ano"
+                min="1888"
+                max="2100"
+                value="{{ filme['ano'] if filme else '' }}"
+                required
+            >
+        </div>
+
+        <div class="campo">
+            <label for="nota">Nota (de 1 a 10)</label>
+            <input
+                type="number"
+                id="nota"
+                name="nota"
+                min="1"
+                max="10"
+                step="1"
+                value="{{ filme['nota'] if filme else '' }}"
+                required
+            >
+        </div>
+
+        <div class="botoes">
+            <button type="submit" class="botao">
+                {% if filme %}Salvar alterações{% else %}Cadastrar filme{% endif %}
+            </button>
+
+            <a href="{{ url_for('index') }}" class="botao cancelar">
+                Cancelar
+            </a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
